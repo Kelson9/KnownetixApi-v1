@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  starmum-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://phone2-db:5432/knownetix
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: godlove99@
+    depends_on:
+      - phone2-db
+
+  phone2-db:
+    image: postgres:12
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_DB: knownetix
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: godlove99@
+    volumes:
+      - ./src/main/resources/data.sql:/docker-entrypoint-initdb.d/data.sql

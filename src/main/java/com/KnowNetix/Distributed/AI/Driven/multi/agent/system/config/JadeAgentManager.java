@@ -1,10 +1,7 @@
 package com.KnowNetix.Distributed.AI.Driven.multi.agent.system.config;
 
-//import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.AssessmentAgent;
-import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.IntelligentTutoringAgent;
-import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.RecommenderAgent;
-import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.ResourceManagementAgent;
-import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.UserAgent;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.*;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.repository.UserRepository;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
@@ -23,7 +20,10 @@ public class JadeAgentManager{
     private ResourceManagementAgent resourceManagementAgent;
 
     private UserAgent userAgent;
-//    private AssessmentAgent assessmentAgent;
+
+    private AssessmentAgent assessmentAgent;
+
+    private UserRepository userRepository;
 
     public void startAgents() {
         try {
@@ -52,9 +52,9 @@ public class JadeAgentManager{
             userAgentController.start();
 
             // Create the Assessment Agent
-//            assessmentAgent = new AssessmentAgent();
-//            AgentController assessmentAgentController = mainContainer.acceptNewAgent("assessmentAgent", assessmentAgent);
-//            assessmentAgentController.start();
+            assessmentAgent = new AssessmentAgent(userRepository);
+            AgentController assessmentAgentController = mainContainer.acceptNewAgent("assessmentAgent", assessmentAgent);
+            assessmentAgentController.start();
 
             // Wait for a while to allow agents to start and communicate
             Thread.sleep(5000);

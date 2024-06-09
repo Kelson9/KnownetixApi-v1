@@ -1,7 +1,10 @@
 package com.KnowNetix.Distributed.AI.Driven.multi.agent.system.config;
 
-import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.AssessmentAgent;
+//import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.AssessmentAgent;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.IntelligentTutoringAgent;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.RecommenderAgent;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.ResourceManagementAgent;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.UserAgent;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
@@ -14,7 +17,13 @@ public class JadeAgentManager{
 
     private AgentContainer mainContainer;
     private IntelligentTutoringAgent tutoringAgent;
-    private AssessmentAgent assessmentAgent;
+
+    private RecommenderAgent recommenderAgent;
+
+    private ResourceManagementAgent resourceManagementAgent;
+
+    private UserAgent userAgent;
+//    private AssessmentAgent assessmentAgent;
 
     public void startAgents() {
         try {
@@ -30,16 +39,28 @@ public class JadeAgentManager{
             AgentController tutoringAgentController = mainContainer.acceptNewAgent("tutoringAgent", tutoringAgent);
             tutoringAgentController.start();
 
+            recommenderAgent = new RecommenderAgent();
+            AgentController recommenderAgentController = mainContainer.acceptNewAgent("recommenderAgent", recommenderAgent);
+            recommenderAgentController.start();
+
+            resourceManagementAgent = new ResourceManagementAgent();
+            AgentController resourceManagementAgentController = mainContainer.acceptNewAgent("resourceManagementAgent", resourceManagementAgent);
+            resourceManagementAgentController.start();
+
+            userAgent = new UserAgent();
+            AgentController userAgentController = mainContainer.acceptNewAgent("userAgent", userAgent);
+            userAgentController.start();
+
             // Create the Assessment Agent
-            assessmentAgent = new AssessmentAgent();
-            AgentController assessmentAgentController = mainContainer.acceptNewAgent("assessmentAgent", assessmentAgent);
-            assessmentAgentController.start();
+//            assessmentAgent = new AssessmentAgent();
+//            AgentController assessmentAgentController = mainContainer.acceptNewAgent("assessmentAgent", assessmentAgent);
+//            assessmentAgentController.start();
 
             // Wait for a while to allow agents to start and communicate
             Thread.sleep(5000);
 
             // Send a message from the Intelligent Tutoring Agent to the Assessment Agent
-            tutoringAgent.sendMessageToAssessmentAgent("This is a message from the Intelligent Tutoring Agent.");
+//            tutoringAgent.sendMessageToAssessmentAgent("This is a message from the Intelligent Tutoring Agent.");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,7 +71,7 @@ public class JadeAgentManager{
         return tutoringAgent;
     }
 
-    public AssessmentAgent getAssessmentAgent() {
-        return assessmentAgent;
-    }
+//    public AssessmentAgent getAssessmentAgent() {
+//        return assessmentAgent;
+//    }
 }

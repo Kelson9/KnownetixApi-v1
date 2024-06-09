@@ -18,12 +18,12 @@ public class IntelligentTutoringAgent extends Agent {
         System.out.println("Intelligent Tutoring Agent is shutting down.");
     }
 
-    public void sendMessageToAssessmentAgent(String content) {
-        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-        message.setContent(content);
-        message.addReceiver(new AID("assessmentAgent", AID.ISLOCALNAME));
-        send(message);
-    }
+//    public void sendMessageToAssessmentAgent(String content) {
+//        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+//        message.setContent(content);
+//        message.addReceiver(new AID("assessmentAgent", AID.ISLOCALNAME));
+//        send(message);
+//    }
 
     private class MessageReceiver extends CyclicBehaviour {
         public void action() {

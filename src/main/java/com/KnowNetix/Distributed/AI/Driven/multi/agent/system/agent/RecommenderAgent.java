@@ -1,6 +1,5 @@
 package com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent;
 
-import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.FuzzyNumber;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.QTable;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.User;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.repository.UserRepository;

@@ -10,12 +10,12 @@ import java.util.List;
 public class LearningPathRecommender {
 
     private double[][] qTable = {
-            {0, 1, 5, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0},
-            {0, 7, 0, 0, 9, 0},
-            {0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0}
+            {5, 4, 3, 2, 1, 0},
+            {4, 5, 3, 2, 1, 0},
+            {4, 3, 5, 2, 1, 0},
+            {4, 3, 2, 5, 1, 0},
+            {4, 3, 2, 1, 5, 0},
+            {4, 3, 2, 1, 0, 5}
     };
 
     private final double GAMMA = 0.9;

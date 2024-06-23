@@ -1,5 +1,6 @@
 package com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent;
 
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -28,5 +29,33 @@ public class ResourceManagementAgent extends Agent {
                 block();
             }
         }
+    }
+
+    public void sendMessageToAssessmentAgent(String content) {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setContent(content);
+        message.addReceiver(new AID("assessmentAgent", AID.ISLOCALNAME));
+        send(message);
+    }
+
+    public void sendMessageToRecommenderAgent(String content) {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setContent(content);
+        message.addReceiver(new AID("recommenderAgent", AID.ISLOCALNAME));
+        send(message);
+    }
+
+    public void sendMessageToTutoringAgentAgent(String content) {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setContent(content);
+        message.addReceiver(new AID("tutoringAgent", AID.ISLOCALNAME));
+        send(message);
+    }
+
+    public void sendMessageToUserAgent(String content) {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setContent(content);
+        message.addReceiver(new AID("userAgent", AID.ISLOCALNAME));
+        send(message);
     }
 }

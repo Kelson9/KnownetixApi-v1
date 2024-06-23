@@ -10,21 +10,19 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActivityLog extends BaseEntity {
+public class LessonActivityLog  extends  BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long logId;
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
-
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "courseId")
-    private Course course;
+    @JoinColumn(name = "lessonId")
+    private Lesson lesson;
     private String timeSpent;
     private double grade;
 }

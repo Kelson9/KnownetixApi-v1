@@ -52,31 +52,44 @@ public class User  extends BaseEntity {
     private String telephoneNumber;
 
     @ManyToMany(mappedBy = "users")
+    @JsonIgnore
     private List<Lesson> lessons = new ArrayList<>();
 
     @ManyToMany(mappedBy = "users")
+    @JsonIgnore
     private List<Quiz> quizzes = new ArrayList<>();
 
     @ManyToMany(mappedBy = "users")
+    @JsonIgnore
     private List<Assessment> assessments = new ArrayList<>();
 
     @OneToMany(mappedBy = "createdBy")
+    @JsonIgnore
     private List<Lesson> createdLessons = new ArrayList<>();
 
     @OneToMany(mappedBy = "createdBy")
+    @JsonIgnore
     private List<Module> createdModules = new ArrayList<>();
 
     @OneToMany(mappedBy = "createdBy")
+    @JsonIgnore
     private List<Course> createdCourses = new ArrayList<>();
 
     @OneToMany(mappedBy = "createdBy")
+    @JsonIgnore
     private List<Assessment> createdAssessments = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
     private List<Enrollment> enrollments = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
     private List<ActivityLog> activityLogs = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
+    private List<LessonActivityLog> lessonActivityLogs = new ArrayList<>();
 
     public User(String username, String email, String password,String telephoneNumber, String levelOfEducation, String interest) {
         this.username = username;

@@ -26,6 +26,8 @@ public interface CourseService {
 
         List<CourseResponse> getCoursesByCategory(String category);
 
-        List<CourseResponse> getUserRecommendedCourses(String category, Level level);
+        List<CourseResponse> getUserRecommendedCourses();
+
+        List<CourseResponse> getFilteredCourses(String lessonLevel, String quizLevel);
 
 }

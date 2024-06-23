@@ -24,7 +24,7 @@ public class QuizRequest {
 
     private Long difficultyLevel;
 
-    private String score;
+    private double score;
 
 
     @Enumerated(EnumType.STRING)

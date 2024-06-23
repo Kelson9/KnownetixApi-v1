@@ -1,6 +1,6 @@
 package com.KnowNetix.Distributed.AI.Driven.multi.agent.system;
 
-//import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.config.JadeAgentManager;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.config.JadeAgentManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -15,8 +15,8 @@ public class DistributedAiDrivenMultiAgentSystemApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(DistributedAiDrivenMultiAgentSystemApplication.class, args);
 
 		// Initialize the JADE agents
-//		JadeAgentManager jadeAgentManager = context.getBean(JadeAgentManager.class);
-//		jadeAgentManager.startAgents();
+		JadeAgentManager jadeAgentManager = context.getBean(JadeAgentManager.class);
+		jadeAgentManager.startAgents();
 	}
 
 //	private static void startJadePlatformWithGui() {

@@ -1,6 +1,7 @@
 package com.KnowNetix.Distributed.AI.Driven.multi.agent.system.controller;
 
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.requestDto.QuizRequest;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.responseDto.CourseResponse;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.responseDto.QuizResponse;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.security.services.UserDetailsImpl;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.service.QuizService;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200") // Replace with your Angular app's URL
 @RestController
 @RequestMapping("/api/v1/quiz")
 @RequiredArgsConstructor
@@ -57,5 +58,15 @@ public class QuizController {
     public ResponseEntity<?> deleteQuiz(@PathVariable Long quizId) {
         quizService.deleteQuiz(quizId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/post-assessment")
+    public ResponseEntity<List<QuizResponse>> generatePostAssessment(@RequestBody CourseResponse courseResponse) {
+        return ResponseEntity.ok(quizService.generatePostAssessment(courseResponse));
+    }
+
+    @PostMapping("/pre-assessment")
+    public ResponseEntity<List<QuizResponse>> generatePreAssessment(@RequestBody CourseResponse courseResponse) {
+        return ResponseEntity.ok(quizService.generatePreAssessment(courseResponse));
     }
 }

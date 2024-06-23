@@ -1,5 +1,7 @@
 package com.KnowNetix.Distributed.AI.Driven.multi.agent.system.controller;
 
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.UserAgent;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.config.JadeAgentManager;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.ERole;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.Role;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.User;
@@ -11,6 +13,7 @@ import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.repository.RoleRep
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.repository.UserRepository;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.security.jwt.JwtUtils;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.security.services.UserDetailsImpl;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.service.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200") // Replace with your Angular app's URL
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -41,6 +44,12 @@ public class UserController {
     private final PasswordEncoder encoder;
 
     private final JwtUtils jwtUtils;
+
+    private final JadeAgentManager jadeAgentManager;
+
+    private  final UserAgent userAgent;
+
+    private final  UserService userService;
 
     @PostConstruct
     public void createRoles(){
@@ -70,6 +79,8 @@ public class UserController {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
+        jadeAgentManager.createUserAgent();
+        userAgent.sendMessageToAssessmentAgent("This is a message from the User Agent.");
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
@@ -165,6 +176,11 @@ public class UserController {
         user1.getRoles().clear();
         user1.getRoles().add(new Role(1L, ERole.ROLE_USER));
         userRepository.save(user1);
+        return ResponseEntity.noContent().build();
+    }
+    @PutMapping("/{userId}")
+    public ResponseEntity<?> updateUserCognitiveState(@PathVariable Long userId, @RequestBody double state) {
+        userService.updateUserCognitiveState(userId, state);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,8 +1,10 @@
 package com.KnowNetix.Distributed.AI.Driven.multi.agent.system.serviceImpl;
 
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.requestDto.QuizRequest;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.responseDto.CourseResponse;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.responseDto.QuizResponse;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.Lesson;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.Level;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.Quiz;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.User;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.repository.LessonRepository;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -126,6 +130,54 @@ public class QuizServiceImpl implements QuizService {
         }
         quizRepository.deleteById(quizId);
     }
+
+    @Override
+    public List<QuizResponse> generatePreAssessment(CourseResponse courseResponse) {
+        List<QuizResponse> basicQuizResponses = courseResponse.getModuleResponse().stream()
+                .flatMap(module -> module.getLessonResponses().stream())
+                .filter(lesson -> lesson.getLessonLevel().equals(Level.BASIC))
+                .flatMap(lesson -> lesson.getQuizResponses().stream())
+                .collect(Collectors.toList());
+
+        Random random = new Random();
+        List<QuizResponse> quizResponses = new ArrayList<>();
+        int quizCount = 0;
+        int maxQuizzes = 10;
+        while (quizCount < maxQuizzes && !basicQuizResponses.isEmpty()) {
+            int index = random.nextInt(basicQuizResponses.size());
+            QuizResponse quizResponse = basicQuizResponses.get(index);
+            quizResponses.add(quizResponse);
+            quizCount++;
+            basicQuizResponses.remove(index);
+        }
+
+        System.out.println(quizResponses);
+        return quizResponses;
+    }
+
+    @Override
+    public List<QuizResponse> generatePostAssessment(CourseResponse courseResponse) {
+        List<QuizResponse> advancedAndIntermediateQuizResponses = courseResponse.getModuleResponse().stream()
+                .flatMap(module -> module.getLessonResponses().stream())
+                .filter(lesson -> lesson.getLessonLevel().equals(Level.ADVANCED) || lesson.getLessonLevel().equals(Level.INTERMEDIATE))
+                .flatMap(lesson -> lesson.getQuizResponses().stream())
+                .collect(Collectors.toList());
+
+        Random random = new Random();
+        List<QuizResponse> quizResponses = new ArrayList<>();
+        int quizCount = 0;
+        int maxQuizzes = 20;
+        while (quizCount < maxQuizzes && !advancedAndIntermediateQuizResponses.isEmpty()) {
+            int index = random.nextInt(advancedAndIntermediateQuizResponses.size());
+            QuizResponse quizResponse = advancedAndIntermediateQuizResponses.get(index);
+            quizResponses.add(quizResponse);
+            quizCount++;
+            advancedAndIntermediateQuizResponses.remove(index);
+        }
+
+        System.out.println(quizResponses);
+        return quizResponses;
+}
 
     private List<QuizResponse> getListOfQuizzes(List<Quiz> quizList){
         List<QuizResponse> quizResponses = new ArrayList<>();

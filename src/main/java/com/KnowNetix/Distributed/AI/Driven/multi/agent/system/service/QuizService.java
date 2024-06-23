@@ -1,6 +1,7 @@
 package com.KnowNetix.Distributed.AI.Driven.multi.agent.system.service;
 
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.requestDto.QuizRequest;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.responseDto.CourseResponse;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.responseDto.QuizResponse;
 
 import java.util.List;
@@ -20,4 +21,8 @@ public interface QuizService {
     void updateQuiz(Long quizId, QuizRequest quizRequest);
 
     void deleteQuiz(Long quizId);
+
+    List<QuizResponse> generatePreAssessment(CourseResponse courseResponse);
+
+    List<QuizResponse> generatePostAssessment(CourseResponse courseResponse);
 }

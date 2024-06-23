@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,8 +38,19 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional=userRepository.findById(id);
         if(!userOptional.isPresent()){
             throw new UsernameNotFoundException(ErrorCodes.USER_NOT_FOUND.getMessage());
-
         }
         return  userOptional.get();
+    }
+
+    @Override
+    public List<User> getAllUserByEnrollments(Long enrollmentId) {
+        return null;
+    }
+
+    @Override
+    public void updateUserCognitiveState(Long userId, double state) {
+        User user = getUser(userId);
+        user.setCognitiveLevel(state);
+        userRepository.save(user);
     }
 }

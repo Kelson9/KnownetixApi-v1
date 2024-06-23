@@ -84,6 +84,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         enrollmentRepository.delete(enrollment);
     }
 
+    @Override
+    public List<User> getUsersByEnrollment(Long courseId) {
+        return enrollmentRepository.findAllUsersByCourseId(courseId);
+    }
+
     Course getCourse(Long courseId){
         Optional<Course> courseOptional = courseRepository.findById(courseId);
         if(!courseOptional.isPresent()){

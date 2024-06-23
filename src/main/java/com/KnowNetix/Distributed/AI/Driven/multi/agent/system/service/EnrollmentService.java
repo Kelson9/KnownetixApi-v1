@@ -3,6 +3,7 @@ package com.KnowNetix.Distributed.AI.Driven.multi.agent.system.service;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.requestDto.EnrollmentRequest;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.responseDto.EnrollmentResponse;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.Enrollment;
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.User;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface EnrollmentService {
     List<EnrollmentResponse> getEnrollmentsByCourse(Long courseId);
     void updateEnrollment(Long enrollmentId, EnrollmentRequest updatedEnrollment);
     void deleteEnrollment(Long enrollmentId);
+    List<User> getUsersByEnrollment(Long courseId);
+
 }

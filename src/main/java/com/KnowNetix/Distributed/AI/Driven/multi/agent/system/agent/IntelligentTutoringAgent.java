@@ -18,13 +18,6 @@ public class IntelligentTutoringAgent extends Agent {
         System.out.println("Intelligent Tutoring Agent is shutting down.");
     }
 
-//    public void sendMessageToAssessmentAgent(String content) {
-//        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-//        message.setContent(content);
-//        message.addReceiver(new AID("assessmentAgent", AID.ISLOCALNAME));
-//        send(message);
-//    }
-
     private class MessageReceiver extends CyclicBehaviour {
         public void action() {
             ACLMessage message = receive();
@@ -34,5 +27,33 @@ public class IntelligentTutoringAgent extends Agent {
                 block();
             }
         }
+    }
+
+    public void sendMessageToAssessmentAgent(String content) {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setContent(content);
+        message.addReceiver(new AID("assessmentAgent", AID.ISLOCALNAME));
+        send(message);
+    }
+
+    public void sendMessageToRecommenderAgent(String content) {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setContent(content);
+        message.addReceiver(new AID("recommenderAgent", AID.ISLOCALNAME));
+        send(message);
+    }
+
+    public void sendMessageToTutoringAgentAgent(String content) {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setContent(content);
+        message.addReceiver(new AID("userAgent", AID.ISLOCALNAME));
+        send(message);
+    }
+
+    public void sendMessageToResourceManagementAgent(String content) {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setContent(content);
+        message.addReceiver(new AID("resourceManagementAgent", AID.ISLOCALNAME));
+        send(message);
     }
 }

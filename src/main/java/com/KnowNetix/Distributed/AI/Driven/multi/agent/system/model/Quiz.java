@@ -37,7 +37,7 @@ public class Quiz  extends BaseEntity{
 
     private Long difficultyLevel;
 
-    private String score;
+    private double score;
 
     @Enumerated(EnumType.STRING)
     Level quizLevel;

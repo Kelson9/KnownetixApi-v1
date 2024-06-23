@@ -1,16 +1,14 @@
 package com.KnowNetix.Distributed.AI.Driven.multi.agent.system.serviceImpl;
 
+import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.agent.UserAgent;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.requestDto.LessonRequest;
-import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.responseDto.CourseResponse;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.responseDto.LessonResponse;
-import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.dto.responseDto.ModuleResponse;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.*;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.Module;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.repository.LessonRepository;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.repository.ModuleRepository;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.repository.UserRepository;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.service.LessonService;
-import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.service.ModuleService;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +27,8 @@ public class LessonServiceImpl implements LessonService {
     private final UserRepository userRepository;
     private final QuizService quizService;
     private final LearningPathRecommender recommender;
+
+    private final UserAgent userAgent;
 
     @Override
     public Long createLesson(LessonRequest lessonRequest, Long userId, Long moduleId) {
@@ -52,7 +52,8 @@ public class LessonServiceImpl implements LessonService {
     public List<LessonResponse> getLessons() {
         List<Lesson> lessons = lessonRepository.findAll();
 
-        int userState = 2;
+//        int userState = Integer.parseInt(userAgent.getUserCognitiveState());
+        int userState = 4;
         Recommendation recommendation = recommender.recommendLearningPath(userState);
         System.out.println("Recommended action: " + recommendation.getAction());
         System.out.println("Learning materials: " + recommendation.getLearningMaterials());

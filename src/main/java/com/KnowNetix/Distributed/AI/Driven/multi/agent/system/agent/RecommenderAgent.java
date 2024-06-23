@@ -4,12 +4,15 @@ import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.FuzzyNumber;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.QTable;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.model.User;
 import com.KnowNetix.Distributed.AI.Driven.multi.agent.system.repository.UserRepository;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class RecommenderAgent extends Agent {
     private UserRepository userRepository;
     private QTable qTable;
@@ -59,10 +62,37 @@ public class RecommenderAgent extends Agent {
             if (message != null) {
                 String content = message.getContent();
                 System.out.println("Recommender Agent received message: " + content);
-                // Implement your custom message handling logic here
             } else {
                 block();
             }
         }
+    }
+
+    public void sendMessageToAssessmentAgent(String content) {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setContent(content);
+        message.addReceiver(new AID("assessmentAgent", AID.ISLOCALNAME));
+        send(message);
+    }
+
+    public void sendMessageToUserAgent(String content) {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setContent(content);
+        message.addReceiver(new AID("userAgent", AID.ISLOCALNAME));
+        send(message);
+    }
+
+    public void sendMessageToTutoringAgentAgent(String content) {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setContent(content);
+        message.addReceiver(new AID("tutoringAgent", AID.ISLOCALNAME));
+        send(message);
+    }
+
+    public void sendMessageToResourceManagementAgent(String content) {
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.setContent(content);
+        message.addReceiver(new AID("resourceManagementAgent", AID.ISLOCALNAME));
+        send(message);
     }
 }

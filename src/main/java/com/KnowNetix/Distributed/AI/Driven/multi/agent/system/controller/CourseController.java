@@ -15,7 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/courses")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200") // Replace with your Angular app's URL
 @RestController
 public class CourseController {
 
@@ -65,7 +65,12 @@ public class CourseController {
 
 
     @GetMapping("/category/level")
-    public ResponseEntity<List<CourseResponse>> getUserRecommendedCourses(@RequestParam String category, @RequestParam Level level) {
-        return ResponseEntity.ok(courseService.getUserRecommendedCourses(category, level));
+    public ResponseEntity<List<CourseResponse>> getUserRecommendedCourses() {
+        return ResponseEntity.ok(courseService.getUserRecommendedCourses());
+    }
+
+    @GetMapping("/filtered")
+    public ResponseEntity<List<CourseResponse>> getFilteredCourses(@RequestParam String lessonLevel, @RequestParam String quizLevel) {
+        return ResponseEntity.ok(courseService.getFilteredCourses(lessonLevel, quizLevel));
     }
 }
